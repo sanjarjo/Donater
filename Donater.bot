@@ -386,12 +386,6 @@ def home():
 # ---- Flask qismi (2-bosqichdagi kod shu joyda) ----
 import os
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))
-    
-    # Flask backendni ishga tushirish
-    thread = Thread(target=lambda: app.run(host="0.0.0.0", port=port))
-    thread.start()
-
-    # Botni ishga tushirish
-    bot.infinity_polling(timeout=10, long_polling_timeout=5)
+def run_flask():
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
