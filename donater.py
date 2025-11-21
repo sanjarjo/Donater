@@ -27,27 +27,27 @@ MAX_WARN = 50
 COOLDOWN = 2.0       # soniya
 
 # Matn tugmalari (istalgancha o'zgartiriladi)
-BTN_DONATE = "ðŸŽ® Donate qilish"
-BTN_ADMIN = "ðŸ‘¨â€ðŸ’» Admin bilan aloqa"
-BTN_BACK = "â¬…ï¸ Bekor qilish"
-BTN_CONFIRM = "âœ… Tasdiqlash"
-BTN_CANCEL = "âŒ Bekor qilish"
+BTN_DONATE = " Donate qilish"
+BTN_ADMIN = "’» Admin bilan aloqa"
+BTN_BACK = "¸ Bekor qilish"
+BTN_CONFIRM = " Tasdiqlash"
+BTN_CANCEL = " Bekor qilish"
 
 # Mobile Legends variantlari (siz bergan narxlar)
 ML_AMOUNTS = [
-    "11 ta ðŸ’Ž â€” 4000 soâ€˜m",
-    "56 ta ðŸ’Ž â€” 12000 soâ€˜m",
-    "86 ta ðŸ’Ž â€” 17000 soâ€˜m",
-    "112 ta ðŸ’Ž â€” 20000 soâ€˜m",
-    "Prapusk (pass) ðŸ’Ž â€” 23000 soâ€˜m",
-    "50+50 ðŸ’Ž â€” 13000 soâ€˜m",
-    "150+150 ðŸ’Ž â€” 35000 soâ€˜m",
-    "250+250 ðŸ’Ž â€” 55000 soâ€˜m",
-    "500+500 ðŸ’Ž â€” 120000 soâ€˜m"
+    "11 ta almaz” 4000 so'm",
+    "56 ta almaz” 12000 so'm",
+    "86 ta almaz” 17000 so'm",
+    "112 ta almaz” 20000 so'm",
+    "Prapusk (pass) ” 23000 so'm",
+    "50+50 almaz” 13000 so'm",
+    "150+150 almaz” 35000 so'm",
+    "250+250 almaz” 55000 so'm",
+    "500+500 almaz” 120000 so'm"
 ]
 
 PUBG_AMOUNTS = [
-    "60 UC â€” 13000 soâ€˜m"
+    "60 UC ” 13000 so'm"
 ]
 
 # ----- yordamchi funksiyalar -----
@@ -86,14 +86,14 @@ def check_spam(chat_id, text=None):
         if remaining[chat_id] <= 0:
             blocked_users.add(chat_id)
             try:
-                bot.send_message(chat_id, "ðŸš« Siz juda koâ€˜p soâ€˜rov yubordingiz. Bot sizni blokladi.")
+                bot.send_message(chat_id, "ðŸš« Siz juda ko'p so'rov yubordingiz. Bot sizni blokladi.")
             except Exception:
                 pass
             return False
         else:
             try:
                 bot.send_message(chat_id,
-                    f"âš ï¸ Iltimos, botga tez-tez soâ€˜rov yubormang!\nQolgan urinishlar: {remaining[chat_id]}")
+                    f" Iltimos, botga tez-tez so'rov yubormang!\nQolgan urinishlar: {remaining[chat_id]}")
             except Exception:
                 pass
             return False
@@ -105,7 +105,7 @@ def check_spam(chat_id, text=None):
 def show_main_menu(chat_id):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.add(BTN_DONATE, BTN_ADMIN)
-    bot.send_message(chat_id, "ðŸ  Bosh menyu:", reply_markup=markup)
+    bot.send_message(chat_id, " Bosh menyu:", reply_markup=markup)
     # o'sha foydalanuvchining vaqtinchalik buyurtma ma'lumotini o'chirish (sovrin)
     user_data.pop(chat_id, None)
 
@@ -146,11 +146,11 @@ def handle_text(message):
     if text == BTN_DONATE:
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.add("Mobile Legends", "PUBG Mobile", BTN_BACK)
-        bot.send_message(chat_id, "Qaysi oâ€˜yinga donate qilmoqchisiz?", reply_markup=markup)
+        bot.send_message(chat_id, "Qaysi o'yinga donate qilmoqchisiz?", reply_markup=markup)
         return
 
     if text == BTN_ADMIN:
-        bot.send_message(chat_id, "ðŸ‘¨â€ðŸ’» Admin bilan aloqa: @sanjar7729")
+        bot.send_message(chat_id, " Admin bilan aloqa: @sanjar7729")
         return
 
     # 2) O'yin tanlandi
@@ -186,7 +186,7 @@ def handle_text(message):
         if step == "await_pubg_amount" and text in PUBG_AMOUNTS:
             ud["amount"] = text
             ud["step"] = "await_id"
-            bot.send_message(chat_id, "ðŸ†” Iltimos, PUBG Game ID ni kiriting (raqam):", reply_markup=types.ReplyKeyboardMarkup(resize_keyboard=True).add(BTN_BACK))
+            bot.send_message(chat_id, " Iltimos, PUBG Game ID ni kiriting (raqam):", reply_markup=types.ReplyKeyboardMarkup(resize_keyboard=True).add(BTN_BACK))
             return
 
         # ID bosqichi
@@ -195,17 +195,17 @@ def handle_text(message):
             # MLBB talabiga qarab zona so'rovini qo'shamiz
             if ud.get("game") == "Mobile Legends":
                 ud["step"] = "await_zone"
-                bot.send_message(chat_id, "ðŸŒ Zona ID kiriting:", reply_markup=types.ReplyKeyboardMarkup(resize_keyboard=True).add(BTN_BACK))
+                bot.send_message(chat_id, " Zona ID kiriting:", reply_markup=types.ReplyKeyboardMarkup(resize_keyboard=True).add(BTN_BACK))
             else:
                 ud["step"] = "await_nick"
-                bot.send_message(chat_id, "ðŸ‘¤ Nick (ism) kiriting:", reply_markup=types.ReplyKeyboardMarkup(resize_keyboard=True).add(BTN_BACK))
+                bot.send_message(chat_id, " Nick (ism) kiriting:", reply_markup=types.ReplyKeyboardMarkup(resize_keyboard=True).add(BTN_BACK))
             return
 
         # Zona bosqichi (faqat MLBB)
         if step == "await_zone":
             ud["zone"] = text
             ud["step"] = "await_nick"
-            bot.send_message(chat_id, "ðŸ‘¤ Nick (ism) kiriting:", reply_markup=types.ReplyKeyboardMarkup(resize_keyboard=True).add(BTN_BACK))
+            bot.send_message(chat_id, " Nick (ism) kiriting:", reply_markup=types.ReplyKeyboardMarkup(resize_keyboard=True).add(BTN_BACK))
             return
 
         # Nick bosqichi
@@ -213,13 +213,13 @@ def handle_text(message):
             ud["nick"] = text
             ud["step"] = "await_confirm"
             # ko'rsatish
-            summary = (f"ðŸ“¦ Buyurtma ma'lumoti:\n"
-                       f"ðŸŽ® O'yin: {ud.get('game')}\n"
-                       f"ðŸ’° Miqdor: {ud.get('amount')}\n"
-                       f"ðŸ†” ID: {ud.get('game_id')}\n")
+            summary = (f" Buyurtma ma'lumoti:\n"
+                       f" O'yin: {ud.get('game')}\n"
+                       f" Miqdor: {ud.get('amount')}\n"
+                       f" ID: {ud.get('game_id')}\n")
             if "zone" in ud:
-                summary += f"ðŸŒ Zona: {ud.get('zone')}\n"
-            summary += f"ðŸ‘¤ Nick: {ud.get('nick')}\n\nMa'lumotlar toâ€˜gâ€˜ri boâ€˜lsa tasdiqlang."
+                summary += f" Zona: {ud.get('zone')}\n"
+            summary += f" Nick: {ud.get('nick')}\n\nMa'lumotlar to'g'ri bo'lsa tasdiqlang."
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             markup.add(BTN_CONFIRM, BTN_CANCEL)
             bot.send_message(chat_id, summary, reply_markup=markup)
@@ -232,8 +232,8 @@ def handle_text(message):
                 ud["step"] = "waiting_photo"
                 ud["order_id"] = uuid.uuid4().hex[:8]
                 bot.send_message(chat_id,
-                                 f"ðŸ’³ Toâ€˜lov qilish uchun karta raqami:\n\n{CARD_NUMBER}\n\n"
-                                 "âœ… Toâ€˜lovni amalga oshirganingizdan soâ€˜ng, chek (rasm) yuboring.")
+                                 f" To'lov qilish uchun karta raqami:\n\n{CARD_NUMBER}\n\n"
+                                 " To'lovni amalga oshirganingizdan so'ng, chek (rasm) yuboring.")
                 return
             elif text == BTN_CANCEL:
                 user_data.pop(chat_id, None)
@@ -243,11 +243,11 @@ def handle_text(message):
 
         # Agar user cheklash bosqichi bo'lsa va ular xabar yuborishsa (masalan matn yuborsa)
         if step == "waiting_photo":
-            bot.send_message(chat_id, "ðŸ“¸ Iltimos, avval toâ€˜lovni qiling va chek (rasm) yuboring yoki Bekor qilish qiling.", reply_markup=types.ReplyKeyboardMarkup(resize_keyboard=True).add(BTN_BACK))
+            bot.send_message(chat_id, " Iltimos, avval to'lovni qiling va chek (rasm) yuboring yoki Bekor qilish qiling.", reply_markup=types.ReplyKeyboardMarkup(resize_keyboard=True).add(BTN_BACK))
             return
 
     # Agar hech qanday shartiga mos kelmasa
-    bot.send_message(chat_id, "ðŸ“Œ Iltimos menyudan tanlang yoki /start yozing.", reply_markup=types.ReplyKeyboardMarkup(resize_keyboard=True).add(BTN_BACK))
+    bot.send_message(chat_id, " Iltimos menyudan tanlang yoki /start yozing.", reply_markup=types.ReplyKeyboardMarkup(resize_keyboard=True).add(BTN_BACK))
 
 # ----- Photo (chek) handler -----
 @bot.message_handler(content_types=['photo'])
@@ -259,7 +259,7 @@ def handle_photo(message):
 
     ud = user_data.get(chat_id)
     if not ud or ud.get("step") != "waiting_photo":
-        bot.send_message(chat_id, "â— Avval buyurtma ma'lumotlarini kiriting (miqdor, ID, nick) va tasdiqlash kerak.")
+        bot.send_message(chat_id, "— Avval buyurtma ma'lumotlarini kiriting (miqdor, ID, nick) va tasdiqlash kerak.")
         return
 
     # order yaratamiz
@@ -280,24 +280,24 @@ def handle_photo(message):
     }
 
     # foydalanuvchiga javob
-    bot.send_message(chat_id, "ðŸ“© Buyurtma qayta ishlashga topshirildi âœ…\nIltimos, sabr qiling.")
+    bot.send_message(chat_id, " Buyurtma qayta ishlashga topshirildi \nIltimos, sabr qiling.")
     # 2 soniya kutib bosh menyuga qaytish
     time.sleep(2)
     show_main_menu(chat_id)
 
-    # admin ga yuborish â€” inline tugmalar bilan
-    caption = (f"ðŸ“¥ Yangi buyurtma (ID: {order_id})\n\n"
-               f"ðŸŽ® {orders[order_id]['game']}\n"
-               f"ðŸ’° {orders[order_id]['amount']}\n"
-               f"ðŸ†” {orders[order_id]['game_id']}\n"
-               f"ðŸŒ {orders[order_id].get('zone','-')}\n"
-               f"ðŸ‘¤ {orders[order_id]['nick']}\n\n"
+    # admin ga yuborish ” inline tugmalar bilan
+    caption = (f" Yangi buyurtma (ID: {order_id})\n\n"
+               f" {orders[order_id]['game']}\n"
+               f" {orders[order_id]['amount']}\n"
+               f" {orders[order_id]['game_id']}\n"
+               f" {orders[order_id].get('zone','-')}\n"
+               f" {orders[order_id]['nick']}\n\n"
                f"Foydalanuvchi: @{message.from_user.username or message.from_user.first_name}")
 
     markup = types.InlineKeyboardMarkup()
     markup.add(
-        types.InlineKeyboardButton("âœ… Qabul qilish", callback_data=f"accept_{order_id}"),
-        types.InlineKeyboardButton("âŒ Bekor qilish", callback_data=f"reject_{order_id}")
+        types.InlineKeyboardButton(" Qabul qilish", callback_data=f"accept_{order_id}"),
+        types.InlineKeyboardButton(" Bekor qilish", callback_data=f"reject_{order_id}")
     )
 
     # adminga rasm yuboriladi va admin mesaj id saqlanadi
@@ -321,23 +321,23 @@ def handle_admin_callback(call):
     if action == "accept":
         # foydalanuvchiga xabar
         try:
-            bot.send_message(user_id, "âœ… Sizning buyurtmangiz yetkazib berildi bizdan harid qilganingiz uchun raxmat.")
+            bot.send_message(user_id, " Sizning buyurtmangiz yetkazib berildi bizdan harid qilganingiz uchun raxmat.")
         except Exception:
             pass
         order["status"] = "accepted"
         # adminga ham tasdiq xabari
         bot.edit_message_caption(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                 caption=call.message.caption + "\n\nâœ… Qabul qilindi", reply_markup=None)
+                                 caption=call.message.caption + "\n\n Qabul qilindi", reply_markup=None)
         bot.answer_callback_query(call.id, "Buyurtma qabul qilindi.")
     else:
         # reject
         try:
-            bot.send_message(user_id, "âŒ Sizning buyurtmangiz bekor qilindi. Qoâ€˜llab-quvvatlash: @sanjar7729")
+            bot.send_message(user_id, " Sizning buyurtmangiz bekor qilindi. Qo'llab-quvvatlash: @sanjar7729")
         except Exception:
             pass
         order["status"] = "rejected"
         bot.edit_message_caption(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                 caption=call.message.caption + "\n\nâŒ Bekor qilindi", reply_markup=None)
+                                 caption=call.message.caption + "\n\n Bekor qilindi", reply_markup=None)
         bot.answer_callback_query(call.id, "Buyurtma bekor qilindi.")
 
     # buyurtmani saqlab qolish uchun orders[] qoldirib qo'yiladi
@@ -377,7 +377,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "Bot ishlayapti âœ…"
+    return "Bot ishlayapti "
 
 
 # Flaskâ€™ni alohida oqimda ishga tushiramiz
