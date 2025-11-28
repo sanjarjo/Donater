@@ -16,7 +16,7 @@ blocked_users = set()
 last_time = {}     # chat_id -> last timestamp
 remaining = {}     # chat_id -> remaining tries
 MAX_WARN = 50
-COOLDOWN = 2.0     # seconds
+COOLDOWN = 1.0     # seconds
 
 # Buttons / labels
 BTN_DONATE = "Donate qilish"
@@ -26,19 +26,19 @@ BTN_CONFIRM = "Tasdiqlash"
 BTN_CANCEL = "Bekor qilish"
 
 ML_AMOUNTS = [
-    "11 ta — 4000 so'm",
-    "56 ta — 12000 so'm",
-    "86 ta — 17000 so'm",
-    "112 ta — 20000 so'm",
-    "Prapusk (pass) — 23000 so'm",
-    "50+50 — 13000 so'm",
-    "150+150 — 35000 so'm",
-    "250+250 — 55000 so'm",
-    "500+500 — 120000 so'm"
+    "11 ta — 2500 so'm",
+    "56 ta — 11000 so'm",
+    "86 ta — 16000 so'm",
+    "112 ta — 19000 so'm",
+    "Prapusk (pass) — 19500 so'm",
+    "50+50 — 11000 so'm",
+    "150+150 — 30000 so'm",
+    "250+250 — 50000 so'm",
+    "500+500 — 100000 so'm"
 ]
 
 PUBG_AMOUNTS = [
-    "60 UC — 13000 so'm"
+    "60 UC — 12500 so'm"
 ]
 
 def is_blocked(chat_id):
