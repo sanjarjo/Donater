@@ -331,8 +331,3 @@ def cmd_unblock(msg):
             pass
     except:
         bot.send_message(ADMIN_ID, "Noto'g'ri ID.")
-
-# Run bot (called from main)
-def run_bot():
-    print("Bot ishga tushdi...")
-    bot.infinity_polling(skip_pending=True)
