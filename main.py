@@ -9,7 +9,7 @@ app = Flask(__name__)
 TOKEN = bot.token
 
 # Render URL (o'zingizning URL’ingizni qo’ying)
-WEBHOOK_URL = f"https://donater-t3xm.onrender.com/webhook/{TOKEN}"
+WEBHOOK_URL = f"https://donater-czkp.onrender.com/webhook/{TOKEN}"
 
 
 @app.route("/", methods=["GET"])
