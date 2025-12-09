@@ -125,7 +125,7 @@ def handle_text(message):
         return
 
     if text == BTN_ADMIN:
-        bot.send_message(chat_id, f"Admin bilan aloqa: @{ADMIN_ID}" if isinstance(ADMIN_ID, str) else f"Admin bilan aloqa: @{ADMIN_ID}")
+        bot.send_message(chat_id, f"Admin bilan aloqa: @{ADMIN_ID}" if isinstance(ADMIN_ID, str) else f"Admin bilan aloqa: @sanjar7729")
         return
 
     if text == "Mobile Legends":
