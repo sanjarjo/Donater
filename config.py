@@ -10,3 +10,4 @@ ADMIN_ID = int(os.getenv("ADMIN_ID", "7390469118"))
 
 # To'lov karta (siz bergan karta)
 CARD_NUMBER = "9860 0827 1937 9966"
+CHANNEL = "@mlbbdonatee"
