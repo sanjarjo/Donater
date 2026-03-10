@@ -100,25 +100,48 @@ def show_main_menu(chat_id):
 @bot.message_handler(commands=['start'])
 def handle_start(msg):
     chat_id = msg.chat.id
-        if not is_subscribed(chat_id):
+
+    if not is_subscribed(chat_id):
         markup = types.InlineKeyboardMarkup()
-        markup.add(types.InlineKeyboardButton("📢 Kanalga obuna bo'lish", url=f"https://t.me/{CHANNEL[1:]}"))
-        bot.send_message(chat_id, "❌ Botdan foydalanish uchun kanalga obuna bo‘ling.", reply_markup=markup)
+        markup.add(
+            types.InlineKeyboardButton(
+                "📢 Kanalga obuna bo'lish", 
+                url=f"https://t.me/{CHANNEL[1:]}"
+            )
+        )
+        bot.send_message(
+            chat_id, 
+            "❌ Botdan foydalanish uchun kanalga obuna bo‘ling.", 
+            reply_markup=markup
+        )
         return
+
     if not check_spam(chat_id, "/start"):
         return
-    show_main_menu(chat_id)
 
+    show_main_menu(chat_id)
 # Text handler
 @bot.message_handler(content_types=['text'])
 def handle_text(message):
     chat_id = message.chat.id
-if not is_subscribed(chat_id):
-    markup = types.InlineKeyboardMarkup()
-    markup.add(types.InlineKeyboardButton("📢 Kanalga obuna bo'lish", url=f"https://t.me/{CHANNEL[1:]}"))
-    bot.send_message(chat_id, "❌ Botdan foydalanish uchun kanalga obuna bo‘ling.", reply_markup=markup)
-    return
+
+    if not is_subscribed(chat_id):
+        markup = types.InlineKeyboardMarkup()
+        markup.add(
+            types.InlineKeyboardButton(
+                "📢 Kanalga obuna bo'lish", 
+                url=f"https://t.me/{CHANNEL[1:]}"
+            )
+        )
+        bot.send_message(
+            chat_id, 
+            "❌ Botdan foydalanish uchun kanalga obuna bo‘ling.", 
+            reply_markup=markup
+        )
+        return
+
     text = message.text.strip()
+    ...
 
     # cancel handlers
     if text in (BTN_BACK, BTN_CANCEL):
