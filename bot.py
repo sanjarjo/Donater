@@ -44,13 +44,7 @@ PUBG_AMOUNTS = [
 def is_blocked(chat_id):
     return chat_id in blocked_users
 
-def check_spam(chat_id, text=None):
-    def is_subscribed(chat_id):
-    try:
-        member = bot.get_chat_member(CHANNEL, chat_id)
-        return member.status in ["member", "administrator", "creator"]
-    except:
-        return False
+
     # always allow cancels and /start
     if text in (BTN_BACK, BTN_CANCEL, "/start"):
         return True
@@ -95,53 +89,101 @@ def show_main_menu(chat_id):
     markup.add(BTN_DONATE, BTN_ADMIN)
     bot.send_message(chat_id, "🏠 Bosh menyu:", reply_markup=markup)
     user_data.pop(chat_id, None)
-
 # Start handler
 @bot.message_handler(commands=['start'])
 def handle_start(msg):
     chat_id = msg.chat.id
 
+    # Kanalga obuna bo'lish tekshiruvi
     if not is_subscribed(chat_id):
         markup = types.InlineKeyboardMarkup()
         markup.add(
             types.InlineKeyboardButton(
-                "📢 Kanalga obuna bo'lish", 
+                "📢 Kanalga obuna bo'lish",
                 url=f"https://t.me/{CHANNEL[1:]}"
             )
         )
         bot.send_message(
-            chat_id, 
-            "❌ Botdan foydalanish uchun kanalga obuna bo‘ling.", 
+            chat_id,
+            "❌ Botdan foydalanish uchun kanalga obuna bo‘ling.",
             reply_markup=markup
         )
         return
 
+    # Anti-spam tekshiruvi
     if not check_spam(chat_id, "/start"):
         return
 
+    # Bosh menyuni ko'rsatish
     show_main_menu(chat_id)
+
+
 # Text handler
 @bot.message_handler(content_types=['text'])
 def handle_text(message):
     chat_id = message.chat.id
 
+    # Kanalga obuna bo'lish tekshiruvi
     if not is_subscribed(chat_id):
         markup = types.InlineKeyboardMarkup()
         markup.add(
             types.InlineKeyboardButton(
-                "📢 Kanalga obuna bo'lish", 
+                "📢 Kanalga obuna bo'lish",
                 url=f"https://t.me/{CHANNEL[1:]}"
             )
         )
         bot.send_message(
-            chat_id, 
-            "❌ Botdan foydalanish uchun kanalga obuna bo‘ling.", 
+            chat_id,
+            "❌ Botdan foydalanish uchun kanalga obuna bo‘ling.",
             reply_markup=markup
         )
         return
 
     text = message.text.strip()
-    ...
+
+    # cancel handlers
+    if text in (BTN_BACK, BTN_CANCEL):
+        user_data.pop(chat_id, None)
+        show_main_menu(chat_id)
+        return
+
+    if not check_spam(chat_id, text):
+        return
+
+    if is_blocked(chat_id):
+        return
+
+    ud = user_data.get(chat_id)
+
+    if text == BTN_DONATE:
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        markup.add("Mobile Legends", "PUBG Mobile", BTN_BACK)
+        bot.send_message(chat_id, "Qaysi o'yinga donate qilmoqchisiz?", reply_markup=markup)
+        return
+
+    if text == BTN_ADMIN:
+        bot.send_message(chat_id, f"Admin bilan aloqa: @{ADMIN_ID}" if isinstance(ADMIN_ID, str) else f"Admin bilan aloqa: @sanjar7729")
+        return
+
+    if text == "Mobile Legends":
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        for amt in ML_AMOUNTS:
+            markup.add(amt)
+        markup.add(BTN_BACK)
+        user_data[chat_id] = {"step": "await_ml_amount", "game": "Mobile Legends"}
+        bot.send_message(chat_id, "Mobile Legends uchun miqdorni tanlang:", reply_markup=markup)
+        return
+
+    if text == "PUBG Mobile":
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        for amt in PUBG_AMOUNTS:
+            markup.add(amt)
+        markup.add(BTN_BACK)
+        user_data[chat_id] = {"step": "await_pubg_amount", "game": "PUBG Mobile"}
+        bot.send_message(chat_id, "PUBG uchun miqdorni tanlang:", reply_markup=markup)
+        return
+
+    # Keyingi step flow qismi shu tarzda davom etadi...
 
     # cancel handlers
     if text in (BTN_BACK, BTN_CANCEL):
