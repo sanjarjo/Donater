@@ -3,8 +3,7 @@ import time
 import uuid
 import telebot
 from telebot import types
-from config import BOT_TOKEN, ADMIN_ID, CARD_NUMBER
-
+from config import BOT_TOKEN, ADMIN_ID, CARD_NUMBER, CHANNEL
 bot = telebot.TeleBot(BOT_TOKEN, parse_mode=None)
 
 # In-memory storage (soddalashgan)
