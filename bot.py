@@ -45,6 +45,12 @@ def is_blocked(chat_id):
     return chat_id in blocked_users
 
 def check_spam(chat_id, text=None):
+    def is_subscribed(chat_id):
+    try:
+        member = bot.get_chat_member(CHANNEL, chat_id)
+        return member.status in ["member", "administrator", "creator"]
+    except:
+        return False
     # always allow cancels and /start
     if text in (BTN_BACK, BTN_CANCEL, "/start"):
         return True
@@ -94,6 +100,11 @@ def show_main_menu(chat_id):
 @bot.message_handler(commands=['start'])
 def handle_start(msg):
     chat_id = msg.chat.id
+        if not is_subscribed(chat_id):
+        markup = types.InlineKeyboardMarkup()
+        markup.add(types.InlineKeyboardButton("📢 Kanalga obuna bo'lish", url=f"https://t.me/{CHANNEL[1:]}"))
+        bot.send_message(chat_id, "❌ Botdan foydalanish uchun kanalga obuna bo‘ling.", reply_markup=markup)
+        return
     if not check_spam(chat_id, "/start"):
         return
     show_main_menu(chat_id)
@@ -102,6 +113,11 @@ def handle_start(msg):
 @bot.message_handler(content_types=['text'])
 def handle_text(message):
     chat_id = message.chat.id
+if not is_subscribed(chat_id):
+    markup = types.InlineKeyboardMarkup()
+    markup.add(types.InlineKeyboardButton("📢 Kanalga obuna bo'lish", url=f"https://t.me/{CHANNEL[1:]}"))
+    bot.send_message(chat_id, "❌ Botdan foydalanish uchun kanalga obuna bo‘ling.", reply_markup=markup)
+    return
     text = message.text.strip()
 
     # cancel handlers
