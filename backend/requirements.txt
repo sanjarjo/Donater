@@ -1,7 +1,0 @@
-fastapi
-uvicorn
-sqlalchemy
-asyncpg
-pydantic
-httpx
-python-telegram-bot==20.5
